@@ -1,0 +1,38 @@
+{
+  "name": "inboxgun",
+  "version": "1.0.2",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "are-we-there-yet": "^4.0.2",
+    "aws-sdk": "^2.1692.0",
+    "bcrypt": "^5.0.0",
+    "cookie-parser": "^1.4.5",
+    "crypto": "^1.0.1",
+    "debug": "^2.6.9",
+    "dotenv": "^16.4.7",
+    "ejs": "^2.6.2",
+    "express": "^4.21.1",
+    "express-session": "^1.17.1",
+    "gauge": "^5.0.2",
+    "grapesjs": "^0.22.4",
+    "http-errors": "^1.6.3",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.46",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^2.1.0",
+    "node": "22.11.0",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.4.10",
+    "nodemon": "^3.1.7",
+    "nvm": "^0.0.4",
+    "path": "^0.12.7",
+    "punycode": "^2.3.1",
+    "rimraf": "^6.0.1",
+    "sequelize": "^6.37.5",
+    "yup": "^1.5.0"
+  }
+}
