@@ -1,0 +1,239 @@
+<%- include('header', {menu:'campaign'}) %>
+    <div class="ig_content_wrapper">
+        <div class="container">
+            <div class="row">
+                <h2 id="ig_baseurl" hidden>
+                    <%= BaseUrl %>
+                </h2>
+                <div class="col-md-12">
+                    <!-- step 1 start -->
+                    <div class="ig_camp_create step1">
+                        <div class="ig_camp_create_header">
+                            <h4>Create New Campaign</h4>
+                            <p>Enter campaign name you'd like to create below.</p>
+                        </div>
+                        <% if(campaignData!='' ){ %>
+                            <div class="ig_input_wrapper">
+                                <input type="hidden" id="campaign-id" value="<%= campaignData.id %>">
+                                <input type="text" class="ig_input" id="campaign_name" placeholder="Enter Campaign Name"
+                                    value="<%= campaignData.campaign_name %>">
+                                <div class="input_error">
+                                    <span id="campaignError"></span>
+                                </div>
+                                <input type="hidden" class="hidden_id" value="<%= id %>">
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="ig_btn ig_camp_next" id="ig_camp"
+                                    data-next="2">Continue</button>
+                                <button type="button" class="ig_btn ig_btn_primary ig_camp_cancel"
+                                    data-next="2">Cancel</button>
+                            </div>
+                            <% }else{ %>
+                                <div class="ig_input_wrapper">
+                                    <input type="hidden" id="campaign-id" value="0">
+                                    <input type="text" class="ig_input" id="campaign_name"
+                                        placeholder="Enter Campaign Name">
+                                    <div class="input_error">
+                                        <span id="campaignError"></span>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="button" class="ig_btn ig_camp_next" id="ig_camp"
+                                        data-next="2">Continue</button>
+                                    <button type="button" class="ig_btn ig_btn_primary ig_camp_cancel"
+                                        data-next="2">Cancel</button>
+                                </div>
+                                <% } %>
+                    </div>
+                    <!-- step 1 end -->
+
+                    <!-- step 2 start -->
+                    <div class="ig_camp_create step2">
+                        <div class="ig_camp_create_header">
+                            <h4>Edit Template</h4>
+                            <p>Edit template you'd like to design below.</p>
+                        </div>
+                        <div class="row template-row">
+                            <button id="clear-template" class="template-btn ig_temp_button active">
+                                Custom
+                            </button>
+
+                            <!--  template1 -->
+                            <button class="template-btn ig_temp_button" id="template-1">
+                                Template 1
+                            </button>
+
+                            <!--  template2 -->
+                            <button class="template-btn ig_temp_button" id="template-2">
+                                Template 2
+                            </button>
+
+                            <!--  template3 -->
+                            <button class="template-btn ig_temp_button" id="template-3">
+                                Template 3
+                            </button>
+                        </div>
+                        <div class="ig_editor_wrapper create_camp_wrapper">
+                            <div class="ig_editor_sidebar">
+                                <button id="toggleSidebar"><i class="fa-solid fa-bars"></i></button>
+                                <h3>Common Settings</h3>
+                                
+                                <div class="ig_input_wrapper font_list" style="display: none;">
+                                    <label>Font Family</label>
+                                    <select class="ig_input ig_select" id="fontlist">
+                                        <option value="">select Font-Family</option>
+                                        <option value="Arial">Arial</option>
+                                        <option value="Century Gothic">Century Gothic</option>
+                                        <option value="Courier New">Courier New</option>
+                                        <option value="Garamond">Garamond</option>
+                                        <option value="Georgia">Georgia</option>
+                                        <option value="Helvetica">Helvetica</option>
+                                        <option value="Impact">Impact</option>
+                                        <option value="Lucida">Lucida</option>
+                                        <option value="Times New Roman">Times New Roman</option>
+                                        <option value="Tahoma">Tahoma</option>
+                                        <option value="Trebuchet">Trebuchet</option>
+                                        <option value="Verdana">Verdana</option>
+                                    </select>
+                                </div>
+                                <div class="ig_input_wrapper heading_font_size" style="display: none;">
+                                    <label>Heading Font Size</label>
+                                    <input type="number" class="ig_input size_heading" value="18">
+                                </div>
+                                <div class="ig_input_wrapper para_font_size" style="display: none;">
+                                    <label>Paragraph Font Size</label>
+                                    <input type="number" class="ig_input size_paragraph" value="14">
+                                </div>
+                                <div class="ig_input_wrapper bd_bg_col">
+                                    <label>Body Background</label>
+                                    <input type="color" class="ig_input color_body_bg" value="#ffffff">
+                                </div>
+                                <div class="ig_input_wrapper temp_bg">
+                                    <label>Template Background</label>
+                                    <input type="color" class="ig_input color_template_bg" value="#fbfbfb">
+                                </div>
+                                <div class="ig_input_wrapper head_color" style="display: none;">
+                                    <label>Heading Color</label>
+                                    <input type="color" class="ig_input color_heading" value="#222222">
+                                </div>
+                                <div class="ig_input_wrapper para_color" style="display: none;">
+                                    <label>Paragraph Color</label>
+                                    <input type="color" class="ig_input color_paragraph" value="#888888">
+                                </div>
+                                <br />
+                                <h3 class="btn_setting" style="display: none;">Button Settings</h3>
+                                <div class="ig_input_wrapper btn_bg_color" style="display: none;">
+                                    <label>Button Background</label>
+                                    <input type="color" class="ig_input color_button_bg" value="#4a148c">
+                                </div>
+                                <div class="ig_input_wrapper btn_color" style="display: none;">
+                                    <label>Button Text color</label>
+                                    <input type="color" class="ig_input color_button" value="#ffffff">
+                                </div>
+                                <div class="ig_input_wrapper btn_txt" style="display: none;">
+                                    <label>Button Link</label>
+                                    <input type="text" class="ig_input button_text" />
+                                </div>
+                            </div>
+
+                            <div class="ig_template_wrapper">
+                                <% if(campaignData!='' ){ %>
+                                    <% if(campaignData.template==null){ %>
+                                        <table class="ig_main_table" style="width: 100%;padding: 50px 10px;">
+                                            <tbody data-element="body" style="background-color: #ffffff;">
+                                                <tr>
+                                                    <td style="padding: 0;">
+                                                        <table class="ig_inner_table" data-element="template"
+                                                            style="background-color: #fbfbfb; width: 600px; margin: 30px auto;">
+                                                            <tbody class="el_target_wrapper"></tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <% }else{ %>
+                                            <%- campaignData.template %>
+                                                <% } %>
+                                                    <% }else{ %>
+                                                        <table class="ig_main_table" data-element="body"
+                                                            style="width: 100%;padding: 50px 10px;">
+                                                            <tbody data-element="body"
+                                                                style="background-color: #ffffff;">
+                                                                <tr>
+                                                                    <td style="padding: 0;">
+                                                                        <table class="ig_inner_table"
+                                                                            data-element="template"
+                                                                            style="background-color: #fbfbfb; width: 600px; margin: 30px auto;">
+                                                                            <tbody class="el_target_wrapper"></tbody>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <% } %>
+                                                            <div class="ig_add_element">
+                                                                <div class="ig_add_element_toggle"
+                                                                    data-toggle="dropdown">+ Add Element</div>
+                                                                <div class="ig_element_popup">
+                                                                    <div class="ig_element_popup_inner">
+                                                                        <h3>Add New Element</h3>
+                                                                        <ul>
+                                                                            <li data-toggle="tooltip" title="Heading"
+                                                                                class="el_add_element"
+                                                                                data-el="heading"><i
+                                                                                    class="fa fa-heading"></i></li>
+                                                                            <li data-toggle="tooltip" title="Paragraph"
+                                                                                class="el_add_element"
+                                                                                data-el="paragraph"><i
+                                                                                    class="fa fa-paragraph"></i></li>
+                                                                            <li data-toggle="tooltip" title="Image"
+                                                                                class="el_add_element" data-el="image">
+                                                                                <i class="fa fa-image"></i>
+                                                                            </li>
+                                                                            <li data-toggle="tooltip" title="Link"
+                                                                                class="el_add_element" data-el="link"><i
+                                                                                    class="fa fa-link"></i></li>
+                                                                            <li data-toggle="tooltip" title="Button"
+                                                                                class="el_add_element" data-el="button">
+                                                                                <i class="fa fa-external-link-alt"></i>
+                                                                            </li>
+                                                                            <li data-toggle="tooltip" title="Divider"
+                                                                                class="el_add_element"
+                                                                                data-el="divider"><i
+                                                                                    class="fa fa-minus"></i></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                            </div>
+                        </div>
+
+                        <input type="file" name="img" id="input_data" style="display: none">
+
+                        <div class="text-center">
+                            <button type="button" class="ig_btn ig_save_btn">Save</button>
+                            <button type="button" class="ig_btn ig_btn_primary ig_cancel_btn">Cancel</button>
+                        </div>
+                    </div>
+                    <div id="back_campaign_popup" class="ig_popup_wrapper ig_delete_popup">
+                        <div class="ig_popup_inner">
+                            <div class="ig_popup_close back_close_popup" data-dismiss="modal"><i
+                                    class="fa fa-times"></i></div>
+                            <div class="ig_popup_title">Are you sure?</div>
+                            <div class="ig_popup_body">
+                                <p>you don't want to save this template.</p>
+                                <button class="ig_btn ig_btn_big yes_btn">Yes</button>
+                                <button class="ig_btn ig_btn_big ig_btn_primary no_btn" data-dismiss="modal">no</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- step 2 end -->
+    </div>
+    </div>
+    <% include footer %>

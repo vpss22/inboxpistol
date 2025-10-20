@@ -1,0 +1,349 @@
+<%- include('header', {menu:'settings'}) %>
+    <div class="ig_content_wrapper">
+        <div class="container">
+            <h2 id="sch-nextPage" hidden>
+                <%= schPagination?.hasNextPage %>
+            </h2>
+            <h2 id="sch-prevPage" hidden>
+                <%= schPagination?.hasPrevPage %>
+            </h2>
+
+            <h2 id="del-nextPage" hidden>
+                <%= delPagination?.hasNextPage %>
+            </h2>
+            <h2 id="del-prevPage" hidden>
+                <%= delPagination?.hasPrevPage %>
+            </h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ig_setting_wrapper">
+                        <div class="ig_tab_wrapper">
+                            <ul>
+                                <li class="profile active"><a href="#tab_profile" data-toggle="tab">Profile</a></li>
+                                <li class="smtp_setting"><a href="#tab_smtp" data-toggle="tab">SMTP Settings</a></li>
+                                <li class="mail_delivery"><a href="#tab_delivery" data-toggle="tab">Mail Delivery</a>
+                                </li>
+                                <li class="sched"><a href="#tab_schedule" data-toggle="tab">Schedule</a></li>
+                            </ul>
+                            <div id="tab_profile" class="ig_tab_content active">
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-8 col-sm-12">
+                                        <div class="ig_input_wrapper">
+                                            <label>Name</label>
+                                            <input type="text" class="ig_input" id="user_name"
+                                                value="<%= user.full_name %>">
+                                            <p id="nameError"></p>
+                                        </div>
+                                        <div class="ig_input_wrapper">
+                                            <label>Email</label>
+                                            <input type="text" class="ig_input" readonly disabled
+                                                value="<%= user.email %>">
+                                        </div><br />
+                                        <h5>Change Password</h5><br />
+                                        <div class="ig_input_wrapper_list">
+                                            <div class="ig_input_wrapper">
+                                                <label>Password</label>
+                                                <input type="password" id="user_pass" class="ig_input">
+                                                <p id="passError"></p>
+                                            </div>
+                                            <div class="ig_input_wrapper">
+                                                <label>Confirm Password</label>
+                                                <input type="password" id="user_cpass" class="ig_input">
+                                                <p id="cpassError"></p>
+                                            </div>
+                                            <p style="font-size: 12px;">If you'd like to change your password simply
+                                                enter a new one here, otherwise leave the field empty.</p><br />
+                                        </div>
+                                        <button type="button" class="ig_btn save_user_detail"
+                                            user-id="<%= user.id %>">Save Changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab_smtp" class="ig_tab_content">
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-8 col-sm-12">
+                                        <div class="ig_input_wrapper">
+                                            <label>Service </label>
+                                            <select class="ig_input ig_select" id="smtp_service">
+                                                <% if(smtpDetail){ %>
+                                                    <option value="<%= smtpDetail.service %>">
+                                                        <%= smtpDetail.service %>
+                                                    </option>
+                                                    <% if(smtpDetail.service=='smtp' ){ %>
+                                                        <option value="gmail">gmail</option>
+                                                        <% }else{ %>
+                                                            <option value="smtp">smtp</option>
+                                                            <% } %>
+                                                                <% }else{ %>
+                                                                    <option value="">Select service</option>
+                                                                    <option value="smtp">smtp</option>
+                                                                    <option value="gmail">gmail</option>
+                                                                    <% } %>
+
+                                            </select>
+                                            <p id="serviceError"></p>
+                                        </div>
+                                        <div class="ig_input_wrapper">
+                                            <label>Host</label>
+                                            <input type="text" class="ig_input" id="smtp_host"
+                                                value="<% if(smtpDetail){ %><%= smtpDetail.host %><% }else{ %><%= '' %><% } %>">
+                                            <p id="hostError"></p>
+                                        </div>
+                                        <div class="ig_input_wrapper">
+                                            <label>Port</label>
+                                            <input type="text" id="smtp_port" class="ig_input"
+                                                value="<% if(smtpDetail){ %><%= smtpDetail.port %><% }else{ %><%= '' %><% } %>">
+                                            <p id="portError"></p>
+                                        </div>
+                                        <div class="ig_input_wrapper">
+                                            <label>User</label>
+                                            <input type="text" id="smtp_email" class="ig_input"
+                                                value="<% if(smtpDetail){ %><%= smtpDetail.email %><% }else{ %><%= '' %><% } %>">
+                                            <p id="smtpEmailError"></p>
+                                        </div>
+                                        <div class="ig_input_wrapper">
+                                            <label>Password</label>
+                                            <input type="text" id="smtp_pass" class="ig_input" value="<% if(smtpDetail){ %><%= smtpDetail.password %><% }else{ %><%= '' %><% } %>">
+                                            <p id="smtpPassError"></p>
+                                        </div>
+                                        <button type="button" class="ig_btn save_smtp_details"
+                                            smtp-id="<% if(smtpDetail){ %><%= smtpDetail.id %><% }else{ %><%= '' %><% } %>">Save
+                                            Changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab_delivery" class="ig_tab_content">
+                                <div class="ig_camp_header">
+                                    <!-- here utility header -->
+                                    <div class="records-limit-container">
+                                        <label for="recordsLimit">Show records :</label>
+                                        <select id="delivery_recordsLimit" class="records-limit-select">
+                                            <option value="5">10</option>
+                                            <option value="15">15</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                        </select>
+                                    </div>
+                                    <div id="ig_search_and_utility">
+                                        <div class="ig_search_bar">
+                                            <input type="text" value="" id="ig_delivery_search"
+                                                placeholder="Search here..." />
+                                            <i class="fa-solid fa-magnifying-glass" id="contact_srch_icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="ig_datatable ig_table_delivery" id="delivery_list">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <!-- <th>Name</th> -->
+                                            <th>Email</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (deliverData.length > 0) { %>
+                                        <% var index=1 %>
+                                            <% for(let i in deliverData){ %>
+                                                <tr>
+                                                    <td>
+                                                        <%= index %>
+                                                    </td>
+                                                    <!-- <td>Tiger Nixon</td> -->
+                                                    <td>
+                                                        <%= deliverData[i].email %>
+                                                    </td>
+                                                    <td>
+                                                        <%= deliverData[i].createdAt %>
+                                                    </td>
+                                                    <% if(deliverData[i].status=='0' ){ %>
+                                                        <td><span class="ig_status pending">Pending</span></td>
+                                                        <% }else{ %>
+                                                            <td><span class="ig_status delivered">Delivered</span></td>
+                                                            <% } %>
+                                                                <td>
+                                                                    <div class="ig_table_action mail_del"
+                                                                        mail-log-id="<%= deliverData[i].id %>">
+                                                                        <span class="ig_ta_btn"><i
+                                                                                class="fa fa-trash"></i></span>
+                                                                    </div>
+                                                                </td>
+                                                </tr>
+                                                <% index++; } %>
+                                                <% } else { %>
+                                                    <tr>
+                                                    <td colspan="6">No deliveries found</td>
+                                                    </tr>
+                                                    <% } %>
+                                    </tbody>
+                                </table>
+                                <div class="col-md-12 ig_pagination">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item" id="del_prev">
+                                                <a class="page-link" href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#"
+                                                    id="del_page_number">1</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#" aria-label="Next" id="del_next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div id="tab_schedule" class="ig_tab_content">
+                                <div class="ig_camp_header">
+                                    <!-- here utility header -->
+                                    <div class="records-limit-container">
+                                        <label for="recordsLimit">Show records :</label>
+                                        <select id="schedule_recordsLimit" class="records-limit-select">
+                                            <option value="5">10</option>
+                                            <option value="15">15</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                        </select>
+                                    </div>
+                                    <div id="ig_search_and_utility">
+                                        <div class="ig_search_bar">
+                                            <input type="text" value="" id="ig_schedule_search"
+                                                placeholder="Search here..." />
+                                            <i class="fa-solid fa-magnifying-glass" id="contact_srch_icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="ig_datatable ig_table_schedule" id="sch_list">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Date</th>
+                                            <th>Group/Emails</th>
+                                            <th>Number of contacts</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (schData.length > 0) { %>
+                                        <% var index=1 %>
+                                            <% for(let i in schData){ %>
+                                                <tr>
+                                                    <td>
+                                                        <%= index %>
+                                                    </td>
+                                                    <td sh-id="<%= schData[i].id %>">
+                                                        <%= schData[i].schedule_time %>
+                                                    </td>
+                                                    <% if(schData[i].group_id !=null){ %>
+                                                        <td>
+                                                            <%= schData[i].ig_group.name %>
+                                                        </td>
+                                                        <% }else{ %>
+                                                            <td>
+                                                                <%= schData[i].email %>
+                                                            </td>
+                                                            <% } %>
+                                                                <td>
+                                                                    <%= schData[i].count %>
+                                                                </td>
+                                                                <% if(schData[i].status=='0' ){ %>
+                                                                    <td><span class="ig_status pending">Pending</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="ig_table_action">
+                                                                            <span class="ig_ta_btn sch_edit"
+                                                                                sch-id="<%= schData[i].id %>">
+                                                                                <i class="fa fa-edit"></i>
+                                                                            </span>
+                                                                            <span class="ig_ta_btn sch_del"
+                                                                                sch-del-id="<%= schData[i].id %>">
+                                                                                <i class="fa fa-trash"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </td>
+                                                                    <% }else{ %>
+                                                                        <td><span
+                                                                                class="ig_status delivered">Delivered</span>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="ig_table_action">
+                                                                                <span class="ig_ta_btn sch_del"
+                                                                                    sch-del-id="<%= schData[i].id %>"><i
+                                                                                        class="fa fa-trash"></i></span>
+                                                                            </div>
+                                                                        </td>
+                                                                        <% } %>
+
+                                                </tr>
+                                                <% index++; } %>
+                                                <% } else { %>
+                                                    <tr>
+                                                    <td colspan="6">No schedules found</td>
+                                                    </tr>
+                                                    <% } %>
+                                    </tbody>
+                                </table>
+
+                                <div class="col-md-12 ig_pagination">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item" id="sch_prev">
+                                                <a class="page-link" href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#"
+                                                    id="sch_page_number">1</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#" aria-label="Next" id="sch_next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="setting_schedule_popup" class="ig_popup_wrapper ig_delete_popup">
+        <div class="ig_popup_inner">
+            <div class="ig_popup_close setting_popup_close" data-dismiss="modal"><i class="fa fa-times"></i></div>
+            <div class="ig_popup_title">Are you sure?</div>
+            <div class="ig_popup_body">
+                <p>you want to delete this data.</p>
+                <button class="ig_btn ig_btn_big ig_btn_red setting">Yes, delete now</button>
+                <button class="ig_btn ig_btn_big ig_btn_primary setting_cancel" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="schedule_edit_popup" class="ig_popup_wrapper">
+        <div class="ig_popup_inner">
+            <div class="ig_popup_close sch_edit_cancel" data-dismiss="modal"><i class="fa fa-times"></i></div>
+            <div class="ig_popup_title">Edit Schedule</div>
+            <div class="ig_popup_body">
+                <div class="ig_input_wrapper sch_date_show">
+                    <label>Select Date/Time for schedule</label>
+                    <input type="text" class="ig_input dateTime" id="schTime">
+                </div>
+
+                <button type="button" class="ig_btn ig_btn_big upd_sch">Update</button>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+    <% include footer %>

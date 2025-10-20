@@ -1,0 +1,113 @@
+<%- include('header', {menu:'dashboard'}) %>
+
+    <div class="ig_content_wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="ig_dashboard_box ig_dashboard_info_box" id="dashboard_clicks_box">
+                        <h3 class="dashboard_box_heading"><i class="far fa-hand-point-up" ></i> Clicks</h3>
+                        <h1 id="dashboard_info">
+                            <%= dataCount.count ? dataCount.count : 0 %>
+                        </h1>
+                    </div>
+                    <div class="ig_dashboard_box ig_dashboard_info_box" id="dashboard_contacts_box">
+                        <h3 class="dashboard_box_heading"><i class="far fa-user"></i> Contacts</h3>
+                            <h1 id="dashboard_info">
+                                <%= contact.totalContacts %>
+                            </h1>
+                            <a href="/contacts/">View all contacts</a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="ig_dashboard_box">
+                        <h3 id="graph_clicks">Clicks</h3>
+                        <canvas id="myChart" style="height: 200px !important;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/chart.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/dashboard/linkCount",
+                method: "GET",
+                success: function (data) {
+                    var month = data.clickCountData.map(function (e) {
+                        return (e.month - 1)
+                    });
+                    var name = myFunction()
+                    var arr1 = [];
+                    for (let i = 0; i < month.length; i++) {
+                        var n = name[month[i]];
+                        arr1.push(n)
+                    }
+
+                    var click = data.clickCountData.map(function (e) {
+                        return e.count
+                    });
+
+                    var ctx = document.getElementById('myChart');
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: arr1,
+                            datasets: [{
+                                label: 'Clicks',
+                                data: click,
+                                backgroundColor: 'rgba(74, 20, 140, 0.2)',
+                                borderColor: '#4a148c',
+                                borderWidth: 2,
+                                pointBackgroundColor: '#4a148c',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: '#4a148c'
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            legend: {
+                                display: false
+                            },
+                            tooltips: {
+                                backgroundColor: '#4a148c',
+                                cornerRadius: 3,
+                                xPadding: 20,
+                                yPadding: 10,
+                                titleFontFamily: "'Poppins', sans-serif",
+                                bodyFontFamily: "'Poppins', sans-serif",
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        function myFunction() {
+            var month = new Array();
+            month[0] = "Jan";
+            month[1] = "Feb";
+            month[2] = "Mar";
+            month[3] = "Apr";
+            month[4] = "May";
+            month[5] = "Jun";
+            month[6] = "Jul";
+            month[7] = "Aug";
+            month[8] = "Sept";
+            month[9] = "Oct";
+            month[10] = "Nov";
+            month[11] = "Dec";
+
+            return month
+        }
+    </script>
+    <% include footer %>
