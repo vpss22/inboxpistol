@@ -1,0 +1,8 @@
+{
+    "service" : "smtp",
+    "host"    : "mail.pixelnx.com",
+    "port"    : 465,
+
+    "email"   : "dev@pixelnx.com",
+    "password"   : "development@321#"
+}
